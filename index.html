@@ -1,27 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>SwapMeet ’76</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="app.js" defer></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
 </head>
-
-<body class="asphalt">
-  <div class="header">
-    <div class="polaroid-logo">
-      <img src="assets/logos/polaroid76.png" alt="SwapMeet ’76 Logo">
-      <p class="polaroid-caption">Trade Like It’s Saturday Morning, 1987.</p>
+<body class="sm76-body">
+  <header class="sm76-header">
+    <div class="sm76-logo">
+      <span class="sm76-logo-main">SwapMeet ’76</span>
+      <span class="sm76-logo-sub">Pure Barter. No Cash. No Fees.</span>
     </div>
-  </div>
+    <nav class="sm76-nav">
+      <a href="pages/home.html" class="sm76-nav-link">Stalls</a>
+      <a href="pages/walkaisle.html" class="sm76-nav-link">Walk the Aisle</a>
+      <a href="pages/marketmap.html" class="sm76-nav-link">Market Map</a>
+      <a href="pages/mytable.html" class="sm76-nav-link">My Table</a>
+      <a href="pages/events.html" class="sm76-nav-link">Events</a>
+      <a href="pages/profile.html" class="sm76-nav-link">Profile</a>
+    </nav>
+  </header>
 
-  <div class="menu">
-    <a href="pages/home.html" class="menu-btn">Enter the Lot</a>
-    <a href="pages/mytable.html" class="menu-btn">My Table</a>
-    <a href="pages/walkaisle.html" class="menu-btn">Walk the Aisle</a>
-    <a href="pages/marketmap.html" class="menu-btn">Market Map</a>
-    <a href="pages/events.html" class="menu-btn">Swap Saturdays</a>
-    <a href="pages/profile.html" class="menu-btn">My Booth</a>
-  </div>
+  <main class="sm76-hero">
+    <section class="sm76-hero-card">
+      <h1>Welcome to SwapMeet ’76</h1>
+      <p class="sm76-hero-text">
+        A digital flea market built for straight‑up trades.  
+        No prices. No bids. Just your gear on the table and what you want for it.
+      </p>
+
+      <div class="sm76-hero-buttons">
+        <a href="pages/home.html" class="sm76-btn sm76-btn-primary">
+          Enter the SwapMeet
+        </a>
+        <a href="pages/mytable.html" class="sm76-btn sm76-btn-outline">
+          Set Up My Table
+        </a>
+      </div>
+
+      <div class="sm76-hero-tags">
+        <span class="sm76-tag">Collectors</span>
+        <span class="sm76-tag">Pickers</span>
+        <span class="sm76-tag">Gearheads</span>
+        <span class="sm76-tag">Hustlers</span>
+      </div>
+    </section>
+  </main>
+
+  <footer class="sm76-footer">
+    <span>SwapMeet ’76 • Barter‑Only • Retro Flea‑Market Network</span>
+  </footer>
+
+  <script src="app.js"></script>
 </body>
 </html>
+
