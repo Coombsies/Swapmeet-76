@@ -210,3 +210,30 @@ body.sm76-body {
   letter-spacing: 0.08em;
   margin-bottom: 8px;
 }
+/* MODAL */
+.sm76-modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+}
+
+.sm76-modal-content {
+  background: #1a1a1a;
+  margin: 10% auto;
+  padding: 20px;
+  width: 90%;
+  max-width: 420px;
+  border-radius: 8px;
+  color: white;
+}
+
+.sm76-close {
+  float: right;
+  font-size: 28px;
+  cursor: pointer;
+}
