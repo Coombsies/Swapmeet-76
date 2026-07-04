@@ -47,3 +47,52 @@ export function formatTradeSummary(offeredItems, requestedItem) {
 export function logSwapEvent(type, payload = {}) {
   console.log(`[SwapMeet76:${type}]`, payload);
 }
+// TRADE MODAL LOGIC
+const tradeModal = document.getElementById("tradeModal");
+const closeModal = document.getElementById("closeModal");
+const modalItemName = document.getElementById("modalItemName");
+const modalItemCondition = document.getElementById("modalItemCondition");
+const modalWants = document.getElementById("modalWants");
+const modalYourItems = document.getElementById("modalYourItems");
+
+// Fake data for now (demo)
+const yourItems = [
+  { name: "Hot Wheels RLC Camaro", condition: "Excellent" },
+  { name: "Vintage Fishing Lures", condition: "Good" },
+  { name: "Retro Tool Set", condition: "Fair" }
+];
+
+// Attach click listeners to all item cards
+document.querySelectorAll(".sm76-card").forEach(card => {
+  card.addEventListener("click", () => {
+    const itemName = card.querySelector("h3")?.innerText || "Item";
+    const itemCondition = card.querySelector("p")?.innerText || "Condition: Unknown";
+
+    modalItemName.innerText = itemName;
+    modalItemCondition.innerText = itemCondition;
+
+    // Wants
+    modalWants.innerHTML = "";
+    card.querySelectorAll(".sm76-pill").forEach(pill => {
+      modalWants.innerHTML += `<span class="sm76-pill">${pill.innerText}</span>`;
+    });
+
+    // Your items
+    modalYourItems.innerHTML = "";
+    yourItems.forEach(item => {
+      modalYourItems.innerHTML += `
+        <div class="sm76-card" style="margin-bottom:10px; cursor:pointer;">
+          <strong>${item.name}</strong>
+          <p style="color:#b3b3b3;">Condition: ${item.condition}</p>
+        </div>
+      `;
+    });
+
+    tradeModal.style.display = "block";
+  });
+});
+
+// Close modal
+closeModal.addEventListener("click", () => {
+  tradeModal.style.display = "none";
+});
