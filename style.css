@@ -1,0 +1,52 @@
+/* COLORS */
+:root {
+  --asphalt: #3A3A3D;
+  --red: #D85C4F;
+  --teal: #4F9C9C;
+  --tan: #D9C7A3;
+  --paper: #F5F0E6;
+  --neon: #FF5FA2;
+}
+
+/* GLOBAL */
+body.asphalt {
+  background: var(--asphalt);
+  color: var(--paper);
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+  padding: 20px;
+}
+
+/* POLAROID LOGO */
+.polaroid-logo {
+  background: var(--paper);
+  padding: 20px;
+  width: 260px;
+  margin: 0 auto;
+  border: 8px solid #fff;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+}
+
+.polaroid-caption {
+  font-family: 'Permanent Marker', cursive;
+  color: var(--asphalt);
+  margin-top: 10px;
+}
+
+/* MENU BUTTONS */
+.menu-btn {
+  display: block;
+  background: var(--red);
+  color: var(--paper);
+  padding: 15px;
+  margin: 10px auto;
+  width: 200px;
+  text-decoration: none;
+  font-size: 20px;
+  border-radius: 6px;
+  box-shadow: 0 0 10px rgba(255,95,162,0.4);
+}
+
+.menu-btn:hover {
+  background: var(--teal);
+}
