@@ -1,52 +1,212 @@
-/* COLORS */
+/* SwapMeet ’76 - Retro Barter-Only Theme */
+
+/* Base */
+
 :root {
-  --asphalt: #3A3A3D;
-  --red: #D85C4F;
-  --teal: #4F9C9C;
-  --tan: #D9C7A3;
-  --paper: #F5F0E6;
-  --neon: #FF5FA2;
+  --sm76-bg: #121212;
+  --sm76-panel: #1c1c1c;
+  --sm76-accent: #d96b2b;   /* burnt orange */
+  --sm76-accent-soft: #f0b27a;
+  --sm76-secondary: #2f4f6f; /* denim blue */
+  --sm76-text-main: #f5f5f5;
+  --sm76-text-muted: #b3b3b3;
+  --sm76-border: #333333;
+  --sm76-radius: 6px;
+  --sm76-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  --sm76-font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-/* GLOBAL */
-body.asphalt {
-  background: var(--asphalt);
-  color: var(--paper);
-  font-family: 'Inter', sans-serif;
-  text-align: center;
-  padding: 20px;
+* {
+  box-sizing: border-box;
 }
 
-/* POLAROID LOGO */
-.polaroid-logo {
-  background: var(--paper);
-  padding: 20px;
-  width: 260px;
-  margin: 0 auto;
-  border: 8px solid #fff;
-  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+body.sm76-body {
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(circle at top, #1f1f1f 0, #050505 55%);
+  color: var(--sm76-text-main);
+  font-family: var(--sm76-font-main);
 }
 
-.polaroid-caption {
-  font-family: 'Permanent Marker', cursive;
-  color: var(--asphalt);
-  margin-top: 10px;
+/* Header / Nav */
+
+.sm76-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--sm76-border);
+  background: linear-gradient(to right, #1c1c1c, #181818);
 }
 
-/* MENU BUTTONS */
-.menu-btn {
-  display: block;
-  background: var(--red);
-  color: var(--paper);
-  padding: 15px;
-  margin: 10px auto;
-  width: 200px;
+.sm76-logo {
+  display: flex;
+  flex-direction: column;
+}
+
+.sm76-logo-main {
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sm76-accent);
+}
+
+.sm76-logo-sub {
+  font-size: 0.8rem;
+  color: var(--sm76-text-muted);
+}
+
+.sm76-nav {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.sm76-nav-link {
+  color: var(--sm76-text-main);
   text-decoration: none;
-  font-size: 20px;
-  border-radius: 6px;
-  box-shadow: 0 0 10px rgba(255,95,162,0.4);
+  font-size: 0.9rem;
+  padding: 6px 10px;
+  border-radius: var(--sm76-radius);
+  border: 1px solid transparent;
+  transition: all 0.15s ease-out;
 }
 
-.menu-btn:hover {
-  background: var(--teal);
+.sm76-nav-link:hover {
+  border-color: var(--sm76-accent);
+  color: var(--sm76-accent-soft);
+}
+
+/* Hero */
+
+.sm76-hero {
+  min-height: calc(100vh - 120px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+}
+
+.sm76-hero-card {
+  max-width: 640px;
+  width: 100%;
+  background: var(--sm76-panel);
+  border-radius: var(--sm76-radius);
+  box-shadow: var(--sm76-shadow);
+  padding: 24px 22px;
+  border: 1px solid var(--sm76-border);
+}
+
+.sm76-hero-card h1 {
+  margin: 0 0 12px;
+  font-size: 1.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.sm76-hero-text {
+  margin: 0 0 18px;
+  color: var(--sm76-text-muted);
+  line-height: 1.5;
+}
+
+/* Buttons */
+
+.sm76-hero-buttons {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.sm76-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 18px;
+  border-radius: var(--sm76-radius);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.15s ease-out;
+}
+
+.sm76-btn-primary {
+  background: var(--sm76-accent);
+  color: #111111;
+}
+
+.sm76-btn-primary:hover {
+  background: #e07c3a;
+  transform: translateY(-1px);
+}
+
+.sm76-btn-outline {
+  background: transparent;
+  color: var(--sm76-accent-soft);
+  border-color: var(--sm76-accent-soft);
+}
+
+.sm76-btn-outline:hover {
+  background: rgba(217, 107, 43, 0.12);
+  transform: translateY(-1px);
+}
+
+/* Tags */
+
+.sm76-hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sm76-tag {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 8px;
+  border-radius: var(--sm76-radius);
+  border: 1px dashed var(--sm76-secondary);
+  color: var(--sm76-text-muted);
+}
+
+/* Footer */
+
+.sm76-footer {
+  padding: 10px 18px;
+  font-size: 0.8rem;
+  color: var(--sm76-text-muted);
+  border-top: 1px solid var(--sm76-border);
+  background: #101010;
+  text-align: center;
+}
+
+/* Utility classes you can reuse in pages */
+
+.sm76-card {
+  background: var(--sm76-panel);
+  border-radius: var(--sm76-radius);
+  border: 1px solid var(--sm76-border);
+  box-shadow: var(--sm76-shadow);
+  padding: 14px 12px;
+}
+
+.sm76-pill {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  border: 1px solid var(--sm76-secondary);
+  color: var(--sm76-text-muted);
+}
+
+.sm76-section-title {
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
 }
