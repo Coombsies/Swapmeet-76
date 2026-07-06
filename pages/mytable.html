@@ -9,7 +9,6 @@
 </head>
 
 <body class="sm76-body">
-
   <header class="sm76-header">
     <div class="sm76-logo">
       <span class="sm76-logo-main">SwapMeet ’76</span>
@@ -26,29 +25,38 @@
     </nav>
   </header>
 
-  <main style="padding: 24px;">
-
+  <main style="padding:24px;">
     <h2 class="sm76-section-title">My Table</h2>
 
-    <!-- ADD ITEM BUTTON -->
-    <div style="margin-bottom: 20px;">
-      <button id="addItemBtn" class="sm76-btn sm76-btn-primary">
-        Add Item to My Table
-      </button>
+    <div id="myItemsGrid"
+         style="display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:20px;">
     </div>
 
-    <!-- ITEMS GRID -->
-    <div id="itemsGrid" style="
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 18px;
-    "></div>
+    <div class="sm76-card" style="margin-top:20px;">
+      <h3>Add Item to Your Table</h3>
 
+      <label>Title</label>
+      <input id="itemTitle" style="width:100%; margin-bottom:10px; padding:8px;">
+
+      <label>Description</label>
+      <textarea id="itemDescription" style="width:100%; margin-bottom:10px; padding:8px;"></textarea>
+
+      <label>Condition</label>
+      <input id="itemCondition" style="width:100%; margin-bottom:10px; padding:8px;">
+
+      <label>Wants (comma separated)</label>
+      <input id="itemWants" style="width:100%; margin-bottom:10px; padding:8px;">
+
+      <button id="btnAddItem" class="sm76-btn sm76-btn-primary" style="width:100%; margin-top:10px;">
+        Post Item
+      </button>
+
+      <p id="addItemMessage" style="margin-top:10px; color:#b3b3b3;"></p>
+    </div>
   </main>
 
   <footer class="sm76-footer">
     <span>SwapMeet ’76 • Barter‑Only • Retro Flea‑Market Network</span>
   </footer>
-
 </body>
 </html>
