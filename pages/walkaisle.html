@@ -5,7 +5,7 @@
   <title>SwapMeet ’76 — Walk the Aisle</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../style.css">
-  <script src="../app.js" defer></script>
+  <script type="module" src="../app.js"></script>
 </head>
 
 <body class="sm76-body">
@@ -29,59 +29,67 @@
   <main style="padding: 24px;">
 
     <h2 class="sm76-section-title">Walk the Aisle</h2>
+    <p style="color:#b3b3b3; margin-bottom: 20px;">
+      Browse every table in the SwapMeet. Click a stall to see what’s on the table.
+    </p>
 
-    <div class="sm76-card" style="margin-bottom: 20px;">
-      <p>Scroll through the aisle like you're walking past tables at a real swap meet.</p>
-    </div>
-
-    <!-- AISLE SCROLL -->
-    <div style="
-      display: flex;
-      overflow-x: auto;
-      gap: 18px;
-      padding-bottom: 10px;
-      scrollbar-width: thin;
-    ">
-
-      <!-- ITEM CARD 1 -->
-      <div class="sm76-card" style="min-width: 240px;">
-        <img src="../assets/banners/map.png" alt="Item" style="width:100%; border-radius:6px; margin-bottom:10px;">
-        <h3 style="margin:0 0 6px;">Matchbox Superfast Lot</h3>
-        <p style="color:#b3b3b3; margin:0 0 10px;">Condition: Good</p>
-        <span class="sm76-pill">Wants: Tools</span>
-      </div>
-
-      <!-- ITEM CARD 2 -->
-      <div class="sm76-card" style="min-width: 240px;">
-        <img src="../assets/banners/map.png" alt="Item" style="width:100%; border-radius:6px; margin-bottom:10px;">
-        <h3 style="margin:0 0 6px;">Vintage Jackets</h3>
-        <p style="color:#b3b3b3; margin:0 0 10px;">Condition: Excellent</p>
-        <span class="sm76-pill">Wants: Diecast</span>
-      </div>
-
-      <!-- ITEM CARD 3 -->
-      <div class="sm76-card" style="min-width: 240px;">
-        <img src="../assets/banners/map.png" alt="Item" style="width:100%; border-radius:6px; margin-bottom:10px;">
-        <h3 style="margin:0 0 6px;">Retro Electronics</h3>
-        <p style="color:#b3b3b3; margin:0 0 10px;">Condition: Fair</p>
-        <span class="sm76-pill">Wants: Sports Gear</span>
-      </div>
-
-      <!-- ITEM CARD 4 -->
-      <div class="sm76-card" style="min-width: 240px;">
-        <img src="../assets/banners/map.png" alt="Item" style="width:100%; border-radius:6px; margin-bottom:10px;">
-        <h3 style="margin:0 0 6px;">NASCAR Diecast</h3>
-        <p style="color:#b3b3b3; margin:0 0 10px;">Condition: Excellent</p>
-        <span class="sm76-pill">Wants: Automobilia</span>
-      </div>
-
-    </div>
+    <!-- TABLES GRID -->
+    <div id="tablesGrid" style="
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    "></div>
 
   </main>
 
   <footer class="sm76-footer">
     <span>SwapMeet ’76 • Barter‑Only • Retro Flea‑Market Network</span>
   </footer>
+
+  <!-- Walk the Aisle Logic -->
+  <script type="module">
+    import { supabase } from "../app.js";
+
+    async function loadTables() {
+      const { data, error } = await supabase
+        .from("swap_tables")
+        .select("*");
+
+      if (error) {
+        console.error(error);
+        return;
+      }
+
+      const grid = document.getElementById("tablesGrid");
+      grid.innerHTML = "";
+
+      data.forEach(table => {
+        const card = document.createElement("div");
+        card.className = "sm76-card";
+        card.style.cursor = "pointer";
+
+        card.innerHTML = `
+          <img src="../assets/banners/map.png"
+               alt="Table Banner"
+               style="width:100%; border-radius:6px; margin-bottom:10px;">
+          <h3 style="margin:0 0 6px;">${table.name}</h3>
+          <p style="color:#b3b3b3; margin:0 0 10px;">
+            Stall ID: ${table.id}
+          </p>
+          <span class="sm76-pill">View Items</span>
+        `;
+
+        card.onclick = () => {
+          // Later: open a table detail page
+          alert(`Table ID: ${table.id}`);
+        };
+
+        grid.appendChild(card);
+      });
+    }
+
+    loadTables();
+  </script>
 
 </body>
 </html>
