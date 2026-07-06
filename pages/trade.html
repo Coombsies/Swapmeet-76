@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SwapMeet ’76 — Trade Offer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../style.css">
+  <script type="module" src="../app.js"></script>
+</head>
+
+<body class="sm76-body">
+
+  <header class="sm76-header">
+    <div class="sm76-logo">
+      <span class="sm76-logo-main">SwapMeet ’76</span>
+      <span class="sm76-logo-sub">Pure Barter. No Cash. No Fees.</span>
+    </div>
+
+    <nav class="sm76-nav">
+      <a href="home.html" class="sm76-nav-link">Stalls</a>
+      <a href="walkaisle.html" class="sm76-nav-link">Walk the Aisle</a>
+      <a href="marketmap.html" class="sm76-nav-link">Market Map</a>
+      <a href="mytable.html" class="sm76-nav-link">My Table</a>
+      <a href="events.html" class="sm76-nav-link">Events</a>
+      <a href="profile.html" class="sm76-nav-link">Profile</a>
+    </nav>
+  </header>
+
+  <main style="padding: 24px;">
+
+    <h2 class="sm76-section-title">Trade Offer</h2>
+
+    <p style="color:#b3b3b3; margin-bottom: 20px;">
+      Review the item and choose one of your items to offer in trade.
+    </p>
+
+    <!-- ITEM BEING VIEWED -->
+    <div id="itemView" class="sm76-card" style="margin-bottom: 30px;"></div>
+
+    <h3>Your Items</h3>
+    <p style="color:#b3b3b3;">Choose one item to offer.</p>
+
+    <!-- YOUR ITEMS GRID -->
+    <div id="yourItemsGrid" style="
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 18px;
+    "></div>
+
+  </main>
+
+  <footer class="sm76-footer">
+    <span>SwapMeet ’76 • Barter‑Only • Retro Flea‑Market Network</span>
+  </footer>
+
+  <!-- Trade Logic -->
+  <script type="module">
+    import { supabase } from "../app.js";
+
+    // Get item ID from URL: trade.html?id=xxxx
+    const params = new URLSearchParams(window.location.search);
+    const itemId = params.get("id");
+
+    if (!itemId) {
+      alert("No item ID provided.");
+    }
+
+    async function loadItem() {
+      const { data, error } = await supabase
+        .from("items")
+        .select("*")
+        .eq("id", itemId)
+        .single();
+
+      if (error) {
+        console.error(error);
+        return;
+      }
+
+      const view = document.getElementById("itemView");
+      view.innerHTML = `
+        <img src="${data.image_url || '../assets/banners/map.png'}"
+             alt="Item"
+             style="width:100%; border-radius:6px; margin-bottom:10px;">
+        <h3>${data.title}</h3>
+        <p style="color:#b3b3b3;">${data.description || ''}</p>
+        <span class="sm76-pill">Owner wants: ${data.wants || 'Anything fair'}</span>
+      `;
+    }
+
+    async function loadYourItems() {
+      const tableId = prompt("Enter YOUR table ID:");
+
+      const { data, error } = await supabase
+        .from("items")
+        .select("*")
+        .eq("table_id", tableId);
+
+      if (error) {
+        console.error(error);
+        return;
+      }
+
+      const grid = document.getElementById("yourItemsGrid");
+      grid.innerHTML = "";
+
+      data.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "sm76-card";
+        card.style.cursor = "pointer";
+
+        card.innerHTML = `
+          <img src="${item.image_url || '../assets/banners/map.png'}"
+               alt="Item"
+               style="width:100%; border-radius:6px; margin-bottom:10px;">
+          <h3>${item.title}</h3>
+          <p style="color:#b3b3b3;">${item.description || ''}</p>
+          <span class="sm76-pill">Offer This Item</span>
+        `;
+
+        card.onclick = () => sendTradeOffer(item.id);
+
+        grid.appendChild(card);
+      });
+    }
+
+    async function sendTradeOffer(offeredItemId) {
+      const { data, error } = await supabase
+        .from("trades")
+        .insert([
+          {
+            item_id: itemId,
+            offered_item_id: offeredItemId,
+            status: "pending"
+          }
+        ]);
+
+      if (error) {
+        console.error(error);
+        alert("Trade failed.");
+        return;
+      }
+
+      alert("Trade offer sent!");
+    }
+
+    loadItem();
+    loadYourItems();
+  </script>
+
+</body>
+</html>
