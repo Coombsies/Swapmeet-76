@@ -5,11 +5,10 @@
   <title>SwapMeet ’76 — Profile</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../style.css">
-<script type="module" src="../app.js"></script>
+  <script type="module" src="../app.js"></script>
 </head>
 
 <body class="sm76-body">
-
   <header class="sm76-header">
     <div class="sm76-logo">
       <span class="sm76-logo-main">SwapMeet ’76</span>
@@ -26,66 +25,34 @@
     </nav>
   </header>
 
-  <main style="padding: 24px;">
+  <main style="padding:24px; max-width:640px; margin:0 auto;">
+    <h2 class="sm76-section-title">Your Profile</h2>
 
-    <h2 class="sm76-section-title">Profile</h2>
-
-    <!-- PROFILE CARD -->
-    <div class="sm76-card" style="margin-bottom: 20px;">
-      <h3 style="margin: 0 0 10px;">Your Stall Identity</h3>
-      <p style="color:#b3b3b3; margin: 0 0 10px;">
-        This is your SwapMeet persona — your badges, your history, your vibe.
+    <div id="profileRoot" class="sm76-card">
+      <p id="profileStatus" style="color:#b3b3b3; margin-bottom:12px;">
+        Checking your session…
       </p>
 
-      <span class="sm76-pill">Collector</span>
-      <span class="sm76-pill">Picker</span>
-      <span class="sm76-pill">Gearhead</span>
-    </div>
+      <div id="profileContent" style="display:none;">
+        <p><strong>Email:</strong> <span id="profileEmail"></span></p>
+        <p><strong>User ID:</strong> <span id="profileId"></span></p>
 
-    <!-- TRADE HISTORY -->
-    <div class="sm76-card" style="margin-bottom: 20px;">
-      <h3 style="margin: 0 0 10px;">Recent Trades</h3>
+        <button id="btnLogout" class="sm76-btn sm76-btn-outline" style="margin-top:12px;">
+          Log Out
+        </button>
+      </div>
 
-      <div style="display: flex; flex-direction: column; gap: 12px;">
-
-        <div>
-          <strong>Hot Wheels RLC Camaro</strong>  
-          <p style="color:#b3b3b3; margin: 4px 0;">Traded for: Vintage Tools</p>
-          <span class="sm76-pill">Completed</span>
-        </div>
-
-        <div>
-          <strong>Vintage Fishing Lures</strong>  
-          <p style="color:#b3b3b3; margin: 4px 0;">Traded for: Retro Electronics</p>
-          <span class="sm76-pill">Completed</span>
-        </div>
-
-        <div>
-          <strong>NASCAR Diecast</strong>  
-          <p style="color:#b3b3b3; margin: 4px 0;">Traded for: Automobilia</p>
-          <span class="sm76-pill">Completed</span>
-        </div>
-
+      <div id="profileNoUser" style="display:none;">
+        <p style="color:#b3b3b3;">
+          You’re not signed in.  
+          <a href="auth.html" style="color:#d96b2b;">Go to Sign In / Sign Up</a>
+        </p>
       </div>
     </div>
-
-    <!-- BADGES -->
-    <div class="sm76-card">
-      <h3 style="margin: 0 0 10px;">Badges Earned</h3>
-
-      <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-        <span class="sm76-pill">First Trade</span>
-        <span class="sm76-pill">5 Trades</span>
-        <span class="sm76-pill">Collector Level 1</span>
-        <span class="sm76-pill">Trusted Trader</span>
-      </div>
-    </div>
-
   </main>
 
   <footer class="sm76-footer">
     <span>SwapMeet ’76 • Barter‑Only • Retro Flea‑Market Network</span>
   </footer>
-
 </body>
 </html>
