@@ -72,4 +72,32 @@
       grid.innerHTML = "";
 
       data.forEach(item => {
-        const card = document
+        const card = document.createElement("div");
+        card.className = "sm76-card";
+        card.innerHTML = `
+          <img src="${item.image_url || '../assets/banners/map.png'}" 
+               alt="Item" 
+               style="width:100%; border-radius:6px; margin-bottom:10px;">
+          <h3 style="margin:0 0 6px;">${item.title}</h3>
+          <p style="color:#b3b3b3; margin:0 0 10px;">${item.description || ''}</p>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    document.getElementById("addItemBtn").onclick = async () => {
+      const title = prompt("Item title:");
+      const description = prompt("Item description:");
+      const imageUrl = prompt("Image URL (optional):");
+
+      const item = await addItem(tableId, title, description, imageUrl);
+      alert(`Added item: ${item.title}`);
+
+      loadItems();
+    };
+
+    loadItems();
+  </script>
+
+</body>
+</html>
