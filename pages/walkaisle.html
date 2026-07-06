@@ -47,9 +47,7 @@
   </footer>
 
   <!-- Walk the Aisle Logic -->
-  <script type="module">
-    import { supabase } from "../app.js";
-
+  
     async function loadTables() {
       const { data, error } = await supabase
         .from("swap_tables")
