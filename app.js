@@ -1,3 +1,43 @@
+import { createClient } from "https://esm.sh/@supabase/supabase-js";
+
+export const supabase = createClient(
+  "https://hustalahrlhzmxxvpwbc.supabase.co",
+  "YOUR_PUBLIC_ANON_KEY"
+);
+import { createClient } from "https://esm.sh/@supabase/supabase-js";
+
+export const supabase = createClient(
+  "https://hustalahrlhzmxxvpwbc.supabase.co",
+  "YOUR_PUBLIC_ANON_KEY"
+);
+
+// ---------------------------
+// Your functions go BELOW this
+// ---------------------------
+
+export async function createSwapTable(name) {
+  const { data, error } = await supabase
+    .from("swap_tables")
+    .insert([{ name }]);
+
+  if (error) throw error;
+  return data[0];
+}
+
+export async function addItem(tableId, title, description, imageUrl) {
+  const { data, error } = await supabase
+    .from("items")
+    .insert([{ 
+      table_id: tableId,
+      title,
+      description,
+      image_url: imageUrl
+    }]);
+
+  if (error) throw error;
+  return data[0];
+}
+
 // SwapMeet ’76 - Barter-only front-end glue
 // Lightweight routing + basic interactions for static pages
 
