@@ -46,48 +46,5 @@
     <span>SwapMeet ’76 • Barter‑Only • Retro Flea‑Market Network</span>
   </footer>
 
-  <!-- Walk the Aisle Logic -->
-  
-    async function loadTables() {
-      const { data, error } = await supabase
-        .from("swap_tables")
-        .select("*");
-
-      if (error) {
-        console.error(error);
-        return;
-      }
-
-      const grid = document.getElementById("tablesGrid");
-      grid.innerHTML = "";
-
-      data.forEach(table => {
-        const card = document.createElement("div");
-        card.className = "sm76-card";
-        card.style.cursor = "pointer";
-
-        card.innerHTML = `
-          <img src="../assets/banners/map.png"
-               alt="Table Banner"
-               style="width:100%; border-radius:6px; margin-bottom:10px;">
-          <h3 style="margin:0 0 6px;">${table.name}</h3>
-          <p style="color:#b3b3b3; margin:0 0 10px;">
-            Stall ID: ${table.id}
-          </p>
-          <span class="sm76-pill">View Items</span>
-        `;
-
-        card.onclick = () => {
-          // Later: open a table detail page
-          alert(`Table ID: ${table.id}`);
-        };
-
-        grid.appendChild(card);
-      });
-    }
-
-    loadTables();
-  </script>
-
 </body>
 </html>
