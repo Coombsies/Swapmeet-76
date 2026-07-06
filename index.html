@@ -35,7 +35,7 @@
           Enter the SwapMeet
         </a>
 
-        <!-- FIXED BUTTON -->
+        <!-- REAL BUTTON -->
         <button id="setupTableBtn" class="sm76-btn sm76-btn-outline">
           Set Up My Table
         </button>
@@ -54,43 +54,23 @@
     <span>SwapMeet ’76 • Barter‑Only • Retro Flea‑Market Network</span>
   </footer>
 
-<script type="module" src="app.js"></script>
+  <!-- Load app.js as a module -->
+  <script type="module" src="app.js"></script>
 
-<!-- TRADE MODAL -->
-<div id="tradeModal" class="sm76-modal">
-  <div class="sm76-modal-content">
+  <!-- Create Table Script -->
+  <script type="module">
+    import { createSwapTable } from "./app.js";
 
-    <span id="closeModal" class="sm76-close">&times;</span>
+    document.getElementById("setupTableBtn").onclick = async () => {
+      const name = prompt("Name your table:");
+      if (!name) return;
 
-    <h2 id="modalItemName">Item Name</h2>
-    <p id="modalItemCondition">Condition: Good</p>
+      const table = await createSwapTable(name);
+      console.log("Created table:", table);
 
-    <h3>Wants</h3>
-    <div id="modalWants"></div>
-
-    <h3>Your Items</h3>
-    <div id="modalYourItems"></div>
-
-    <button id="sendTradeBtn" class="sm76-btn sm76-btn-primary">
-      Send Trade Offer
-    </button>
-
-  </div>
-</div>
-
-<script type="module">
-  import { createSwapTable } from "./app.js";
-
-  document.getElementById("setupTableBtn").onclick = async () => {
-    const name = prompt("Name your table:");
-    if (!name) return;
-
-    const table = await createSwapTable(name);
-    console.log("Created table:", table);
-
-    alert(`Your table "${table.name}" is live.`);
-  };
-</script>
+      alert(`Your table "${table.name}" is live.`);
+    };
+  </script>
 
 </body>
 </html>
