@@ -1,11 +1,6 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js";
 
-export const supabase = createClient(
-  "https://hustalahrlhzmxxvpwbc.supabase.co",
-  "YOUR_PUBLIC_ANON_KEY"
-);
-import { createClient } from "https://esm.sh/@supabase/supabase-js";
-
+// SINGLE Supabase client — the only one
 export const supabase = createClient(
   "https://hustalahrlhzmxxvpwbc.supabase.co",
   "YOUR_PUBLIC_ANON_KEY"
@@ -74,10 +69,6 @@ function wireHeroButtons() {
   }
 }
 
-// ---------------------------------------------------------
-// Removed ALL export statements (GitHub Pages cannot run ES modules)
-// ---------------------------------------------------------
-
 function formatTradeSummary(offeredItems, requestedItem) {
   return {
     title: "Trade Offer",
@@ -108,14 +99,12 @@ function wireTradeModal() {
     return;
   }
 
-  // Fake data for now (demo)
   const yourItems = [
     { name: "Hot Wheels RLC Camaro", condition: "Excellent" },
     { name: "Vintage Fishing Lures", condition: "Good" },
     { name: "Retro Tool Set", condition: "Fair" }
   ];
 
-  // Attach click listeners to all item cards
   document.querySelectorAll(".sm76-card").forEach(card => {
     card.addEventListener("click", () => {
       const itemName = card.querySelector("h3")?.innerText || "Item";
@@ -124,13 +113,11 @@ function wireTradeModal() {
       modalItemName.innerText = itemName;
       modalItemCondition.innerText = itemCondition;
 
-      // Wants
       modalWants.innerHTML = "";
       card.querySelectorAll(".sm76-pill").forEach(pill => {
         modalWants.innerHTML += `<span class="sm76-pill">${pill.innerText}</span>`;
       });
 
-      // Your items
       modalYourItems.innerHTML = "";
       yourItems.forEach(item => {
         modalYourItems.innerHTML += `
@@ -145,14 +132,12 @@ function wireTradeModal() {
     });
   });
 
-  // Close modal
   if (closeModal) {
     closeModal.addEventListener("click", () => {
       tradeModal.style.display = "none";
     });
   }
 
-  // Close when clicking outside modal
   window.addEventListener("click", (e) => {
     if (e.target === tradeModal) {
       tradeModal.style.display = "none";
