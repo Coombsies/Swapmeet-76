@@ -5,7 +5,7 @@
   <title>SwapMeet ’76 — My Table</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../style.css">
-  <script src="../app.js" defer></script>
+  <script type="module" src="../app.js"></script>
 </head>
 
 <body class="sm76-body">
@@ -32,45 +32,17 @@
 
     <!-- ADD ITEM BUTTON -->
     <div style="margin-bottom: 20px;">
-      <a class="sm76-btn sm76-btn-primary" style="text-decoration:none;">
+      <button id="addItemBtn" class="sm76-btn sm76-btn-primary">
         Add Item to My Table
-      </a>
+      </button>
     </div>
 
-    <!-- YOUR ITEMS GRID -->
-    <div style="
+    <!-- ITEMS GRID -->
+    <div id="itemsGrid" style="
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
       gap: 18px;
-    ">
-
-      <!-- ITEM CARD 1 -->
-      <div class="sm76-card">
-        <img src="../assets/banners/map.png" alt="Item" style="width:100%; border-radius:6px; margin-bottom:10px;">
-        <h3 style="margin:0 0 6px;">Hot Wheels RLC Camaro</h3>
-        <p style="color:#b3b3b3; margin:0 0 10px;">Condition: Excellent</p>
-        <span class="sm76-pill">Wants: Tools</span>
-        <span class="sm76-pill">Wants: Vintage Jackets</span>
-      </div>
-
-      <!-- ITEM CARD 2 -->
-      <div class="sm76-card">
-        <img src="../assets/banners/map.png" alt="Item" style="width:100%; border-radius:6px; margin-bottom:10px;">
-        <h3 style="margin:0 0 6px;">Vintage Fishing Lures</h3>
-        <p style="color:#b3b3b3; margin:0 0 10px;">Condition: Good</p>
-        <span class="sm76-pill">Wants: Diecast</span>
-        <span class="sm76-pill">Wants: Electronics</span>
-      </div>
-
-      <!-- ITEM CARD 3 -->
-      <div class="sm76-card">
-        <img src="../assets/banners/map.png" alt="Item" style="width:100%; border-radius:6px; margin-bottom:10px;">
-        <h3 style="margin:0 0 6px;">Retro Tool Set</h3>
-        <p style="color:#b3b3b3; margin:0 0 10px;">Condition: Fair</p>
-        <span class="sm76-pill">Wants: Sports Gear</span>
-      </div>
-
-    </div>
+    "></div>
 
   </main>
 
@@ -78,5 +50,26 @@
     <span>SwapMeet ’76 • Barter‑Only • Retro Flea‑Market Network</span>
   </footer>
 
-</body>
-</html>
+  <!-- My Table Logic -->
+  <script type="module">
+    import { supabase, addItem } from "../app.js";
+
+    // TEMP: Ask user for table ID (later we automate)
+    const tableId = prompt("Enter your table ID:");
+
+    async function loadItems() {
+      const { data, error } = await supabase
+        .from("items")
+        .select("*")
+        .eq("table_id", tableId);
+
+      if (error) {
+        console.error(error);
+        return;
+      }
+
+      const grid = document.getElementById("itemsGrid");
+      grid.innerHTML = "";
+
+      data.forEach(item => {
+        const card = document
