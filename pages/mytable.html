@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>SwapMeet ’76 — Table View</title>
+  <title>SwapMeet ’76 — My Table</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../style.css">
   <script type="module" src="../app.js"></script>
@@ -28,11 +28,14 @@
 
   <main style="padding: 24px;">
 
-    <h2 id="tableName" class="sm76-section-title">Loading Table...</h2>
+    <h2 class="sm76-section-title">My Table</h2>
 
-    <p style="color:#b3b3b3; margin-bottom: 20px;">
-      Viewing all items on this stall.
-    </p>
+    <!-- ADD ITEM BUTTON -->
+    <div style="margin-bottom: 20px;">
+      <button id="addItemBtn" class="sm76-btn sm76-btn-primary">
+        Add Item to My Table
+      </button>
+    </div>
 
     <!-- ITEMS GRID -->
     <div id="itemsGrid" style="
@@ -46,73 +49,6 @@
   <footer class="sm76-footer">
     <span>SwapMeet ’76 • Barter‑Only • Retro Flea‑Market Network</span>
   </footer>
-
-  <!-- Table Detail Logic -->
-  <script type="module">
-    import { supabase } from "../app.js";
-
-    // Get table ID from URL: table.html?id=xxxx
-    const params = new URLSearchParams(window.location.search);
-    const tableId = params.get("id");
-
-    if (!tableId) {
-      alert("No table ID provided.");
-    }
-
-    async function loadTableInfo() {
-      const { data, error } = await supabase
-        .from("swap_tables")
-        .select("*")
-        .eq("id", tableId)
-        .single();
-
-      if (error) {
-        console.error(error);
-        return;
-      }
-
-      document.getElementById("tableName").textContent = data.name;
-    }
-
-    async function loadItems() {
-      const { data, error } = await supabase
-        .from("items")
-        .select("*")
-        .eq("table_id", tableId);
-
-      if (error) {
-        console.error(error);
-        return;
-      }
-
-      const grid = document.getElementById("itemsGrid");
-      grid.innerHTML = "";
-
-      data.forEach(item => {
-        const card = document.createElement("div");
-        card.className = "sm76-card";
-        card.style.cursor = "pointer";
-
-        card.innerHTML = `
-          <img src="${item.image_url || '../assets/banners/map.png'}"
-               alt="Item"
-               style="width:100%; border-radius:6px; margin-bottom:10px;">
-          <h3 style="margin:0 0 6px;">${item.title}</h3>
-          <p style="color:#b3b3b3; margin:0 0 10px;">${item.description || ''}</p>
-          <span class="sm76-pill">View Item</span>
-        `;
-
-        card.onclick = () => {
-          alert("Item ID: " + item.id);
-        };
-
-        grid.appendChild(card);
-      });
-    }
-
-    loadTableInfo();
-    loadItems();
-  </script>
 
 </body>
 </html>
