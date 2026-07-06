@@ -4,7 +4,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js";
 // SUPABASE CLIENT (REAL)
 // ---------------------------------------------------------
 export const supabase = createClient(
-  "https://hustalahrlhzmxxvpwbc.supabase.co",
+  "https://hustalahrlhzmxvvpwbc.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh1c3RhbGFocmxoem14dnZwd2JjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMzMjIxNjQsImV4cCI6MjA5ODg5ODE2NH0.sagiwkUiw2MKdCsJM7tOncTxRjjQZ_n2K004PgOC3Ns"
 );
 
