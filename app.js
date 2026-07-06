@@ -25,7 +25,7 @@ const DEMO_ITEMS = [
     description: "Hot Wheels, Matchbox, 70s–90s era.",
     condition: "Good",
     wants: ["Tools", "Retro Jackets"],
-    image_url: "../assets/banners/map.png"
+    image_url: "./assets/banners/map.png"
   },
   {
     id: 102,
@@ -34,7 +34,7 @@ const DEMO_ITEMS = [
     description: "Clean pair, size 10.",
     condition: "Excellent",
     wants: ["Diecast", "Electronics"],
-    image_url: "../assets/banners/map.png"
+    image_url: "./assets/banners/map.png"
   },
   {
     id: 103,
@@ -43,7 +43,7 @@ const DEMO_ITEMS = [
     description: "Rustic but functional.",
     condition: "Fair",
     wants: ["Sports Gear"],
-    image_url: "../assets/banners/map.png"
+    image_url: "./assets/banners/map.png"
   }
 ];
 
@@ -62,7 +62,6 @@ const DEMO_TRADES = [
 document.addEventListener("DOMContentLoaded", () => {
   wireGlobalNav();
 
-  // These will only do work if their target elements exist on the page.
   loadStalls();
   loadTables();
   loadMyTable();
@@ -83,22 +82,19 @@ function wireGlobalNav() {
 }
 
 // ---------------------------------------------------------
-// PAGE: STALLS (home/index)
-// Needs: <div id="stallsGrid">
+// PAGE: STALLS
 // ---------------------------------------------------------
 async function loadStalls() {
   const grid = document.getElementById("stallsGrid");
   if (!grid) return;
 
-  console.log("[SwapMeet76] Loading stalls…");
-
   let items = DEMO_ITEMS;
 
   try {
-    const { data, error } = await supabase.from("items").select("*");
-    if (!error && data?.length) items = data;
+    const { data } = await supabase.from("items").select("*");
+    if (data?.length) items = data;
   } catch (e) {
-    console.warn("[SwapMeet76] Supabase items failed, using demo.", e);
+    console.warn("Supabase failed, using demo items.");
   }
 
   grid.innerHTML = "";
@@ -108,15 +104,11 @@ async function loadStalls() {
     card.className = "sm76-card";
     card.style.cursor = "pointer";
 
-    const wantsHtml = item.wants
-      ? item.wants.map(w => `<span class="sm76-pill">${w}</span>`).join("")
-      : "";
-
     card.innerHTML = `
-      <img src="${item.image_url}" style="width:100%; border-radius:6px; margin-bottom:10px;">
+      <img src="${item.image_url}" style="width:100%; border-radius:6px;">
       <h3>${item.title}</h3>
-      <p style="color:#b3b3b3;">Condition: ${item.condition || "Unknown"}</p>
-      <div>${wantsHtml}</div>
+      <p style="color:#b3b3b3;">Condition: ${item.condition}</p>
+      <div>${item.wants.map(w => `<span class="sm76-pill">${w}</span>`).join("")}</div>
     `;
 
     card.onclick = () => {
@@ -128,22 +120,19 @@ async function loadStalls() {
 }
 
 // ---------------------------------------------------------
-// PAGE: WALK THE AISLE (walkaisle.html)
-// Needs: <div id="tablesGrid">
+// PAGE: WALK THE AISLE
 // ---------------------------------------------------------
 async function loadTables() {
   const grid = document.getElementById("tablesGrid");
   if (!grid) return;
 
-  console.log("[SwapMeet76] Loading tables…");
-
   let tables = DEMO_TABLES;
 
   try {
-    const { data, error } = await supabase.from("swap_tables").select("*");
-    if (!error && data?.length) tables = data;
+    const { data } = await supabase.from("swap_tables").select("*");
+    if (data?.length) tables = data;
   } catch (e) {
-    console.warn("[SwapMeet76] Supabase tables failed, using demo.", e);
+    console.warn("Supabase failed, using demo tables.");
   }
 
   grid.innerHTML = "";
@@ -154,12 +143,9 @@ async function loadTables() {
     card.style.cursor = "pointer";
 
     card.innerHTML = `
-      <img src="../assets/banners/map.png"
-           style="width:100%; border-radius:6px; margin-bottom:10px;">
-      <h3 style="margin:0 0 6px;">${table.name}</h3>
-      <p style="color:#b3b3b3; margin:0 0 10px;">
-        Stall ID: ${table.id}
-      </p>
+      <img src="./assets/banners/map.png" style="width:100%; border-radius:6px;">
+      <h3>${table.name}</h3>
+      <p style="color:#b3b3b3;">Stall ID: ${table.id}</p>
       <span class="sm76-pill">View Items</span>
     `;
 
@@ -172,29 +158,22 @@ async function loadTables() {
 }
 
 // ---------------------------------------------------------
-// PAGE: MY TABLE (mytable.html)
-// Needs: <div id="myItemsGrid">
+// PAGE: MY TABLE
 // ---------------------------------------------------------
 async function loadMyTable() {
   const grid = document.getElementById("myItemsGrid");
   if (!grid) return;
 
-  console.log("[SwapMeet76] Loading My Table…");
-
   const params = new URLSearchParams(window.location.search);
   const tableId = params.get("table") || 1;
 
-  let items = DEMO_ITEMS.filter(i => String(i.table_id) === String(tableId));
+  let items = DEMO_ITEMS.filter(i => i.table_id == tableId);
 
   try {
-    const { data, error } = await supabase
-      .from("items")
-      .select("*")
-      .eq("table_id", tableId);
-
-    if (!error && data?.length) items = data;
+    const { data } = await supabase.from("items").select("*").eq("table_id", tableId);
+    if (data?.length) items = data;
   } catch (e) {
-    console.warn("[SwapMeet76] Supabase My Table failed, using demo.", e);
+    console.warn("Supabase failed, using demo items.");
   }
 
   grid.innerHTML = "";
@@ -204,14 +183,13 @@ async function loadMyTable() {
     card.className = "sm76-card";
 
     card.innerHTML = `
-      <img src="${item.image_url}" style="width:100%; border-radius:6px; margin-bottom:10px;">
+      <img src="${item.image_url}" style="width:100%; border-radius:6px;">
       <h3>${item.title}</h3>
-      <p style="color:#b3b3b3;">${item.description || ""}</p>
+      <p style="color:#b3b3b3;">${item.description}</p>
       <button class="sm76-btn sm76-btn-primary">Offer Trade</button>
     `;
 
-    const btn = card.querySelector("button");
-    btn.onclick = () => {
+    card.querySelector("button").onclick = () => {
       window.location.href = `trade.html?item=${item.id}`;
     };
 
@@ -220,46 +198,32 @@ async function loadMyTable() {
 }
 
 // ---------------------------------------------------------
-// PAGE: TRADE OFFER (trade.html)
-// Needs: <div id="itemView">, <div id="yourItemsGrid">
+// PAGE: TRADE OFFER
 // ---------------------------------------------------------
 async function loadTradeOffer() {
   const itemView = document.getElementById("itemView");
   const yourItemsGrid = document.getElementById("yourItemsGrid");
   if (!itemView || !yourItemsGrid) return;
 
-  console.log("[SwapMeet76] Loading Trade Offer…");
-
   const params = new URLSearchParams(window.location.search);
   const itemId = params.get("item");
 
-  let item = DEMO_ITEMS.find(i => String(i.id) === String(itemId));
+  let item = DEMO_ITEMS.find(i => i.id == itemId);
 
   try {
-    const { data, error } = await supabase
-      .from("items")
-      .select("*")
-      .eq("id", itemId)
-      .single();
-
-    if (!error && data) item = data;
+    const { data } = await supabase.from("items").select("*").eq("id", itemId).single();
+    if (data) item = data;
   } catch (e) {
-    console.warn("[SwapMeet76] Supabase trade item failed, using demo.", e);
-  }
-
-  if (!item) {
-    itemView.innerHTML = "<p>Item not found.</p>";
-    return;
+    console.warn("Supabase failed, using demo item.");
   }
 
   itemView.innerHTML = `
-    <img src="${item.image_url}" style="width:100%; border-radius:6px; margin-bottom:10px;">
+    <img src="${item.image_url}" style="width:100%; border-radius:6px;">
     <h3>${item.title}</h3>
-    <p>${item.description || ""}</p>
+    <p>${item.description}</p>
   `;
 
-  // For now, "your items" = demo items from table 1
-  let yourItems = DEMO_ITEMS.filter(i => i.table_id === 1);
+  let yourItems = DEMO_ITEMS.filter(i => i.table_id == 1);
 
   yourItemsGrid.innerHTML = "";
 
@@ -269,9 +233,9 @@ async function loadTradeOffer() {
     card.style.cursor = "pointer";
 
     card.innerHTML = `
-      <img src="${yItem.image_url}" style="width:100%; border-radius:6px; margin-bottom:10px;">
+      <img src="${yItem.image_url}" style="width:100%; border-radius:6px;">
       <h3>${yItem.title}</h3>
-      <p>${yItem.description || ""}</p>
+      <p>${yItem.description}</p>
     `;
 
     card.onclick = async () => {
@@ -284,7 +248,7 @@ async function loadTradeOffer() {
           }
         ]);
       } catch (e) {
-        console.warn("[SwapMeet76] Supabase trade insert failed (demo only).", e);
+        console.warn("Supabase failed, demo only.");
       }
 
       alert("Trade offer sent!");
@@ -296,63 +260,53 @@ async function loadTradeOffer() {
 }
 
 // ---------------------------------------------------------
-// PAGE: TRADE INBOX (tradeinbox.html)
-// Needs: <div id="tradesGrid">
+// PAGE: TRADE INBOX
 // ---------------------------------------------------------
 async function loadTradeInbox() {
   const grid = document.getElementById("tradesGrid");
   if (!grid) return;
 
-  console.log("[SwapMeet76] Loading Trade Inbox…");
-
   let trades = DEMO_TRADES;
 
   try {
-    const { data, error } = await supabase.from("trades").select("*");
-    if (!error && data?.length) trades = data;
+    const { data } = await supabase.from("trades").select("*");
+    if (data?.length) trades = data;
   } catch (e) {
-    console.warn("[SwapMeet76] Supabase trades failed, using demo.", e);
+    console.warn("Supabase failed, using demo trades.");
   }
 
   grid.innerHTML = "";
 
   trades.forEach(trade => {
-    const requested =
-      DEMO_ITEMS.find(i => i.id === trade.item_id) || DEMO_ITEMS[0];
-    const offered =
-      DEMO_ITEMS.find(i => i.id === trade.offered_item_id) || DEMO_ITEMS[1];
+    const requested = DEMO_ITEMS.find(i => i.id == trade.item_id);
+    const offered = DEMO_ITEMS.find(i => i.id == trade.offered_item_id);
 
     const card = document.createElement("div");
     card.className = "sm76-card";
 
     card.innerHTML = `
       <h3>Trade Offer</h3>
-      <p style="color:#b3b3b3;">Status: ${trade.status}</p>
+      <p>Status: ${trade.status}</p>
 
       <h4>You Own:</h4>
-      <img src="${requested.image_url}" style="width:100%; border-radius:6px; margin-bottom:10px;">
+      <img src="${requested.image_url}" style="width:100%; border-radius:6px;">
       <strong>${requested.title}</strong>
 
       <h4>They Offer:</h4>
-      <img src="${offered.image_url}" style="width:100%; border-radius:6px; margin-bottom:10px;">
+      <img src="${offered.image_url}" style="width:100%; border-radius:6px;">
       <strong>${offered.title}</strong>
 
-      <div style="margin-top: 15px;">
-        <button class="sm76-btn sm76-btn-primary">Accept Trade</button>
-        <button class="sm76-btn sm76-btn-outline">Decline Trade</button>
-      </div>
+      <button class="sm76-btn sm76-btn-primary">Accept</button>
+      <button class="sm76-btn sm76-btn-outline">Decline</button>
     `;
 
     const [acceptBtn, declineBtn] = card.querySelectorAll("button");
 
     acceptBtn.onclick = async () => {
       try {
-        await supabase
-          .from("trades")
-          .update({ status: "accepted" })
-          .eq("id", trade.id);
+        await supabase.from("trades").update({ status: "accepted" }).eq("id", trade.id);
       } catch (e) {
-        console.warn("[SwapMeet76] Supabase accept failed (demo only).", e);
+        console.warn("Supabase failed, demo only.");
       }
 
       alert("Trade accepted!");
@@ -361,12 +315,9 @@ async function loadTradeInbox() {
 
     declineBtn.onclick = async () => {
       try {
-        await supabase
-          .from("trades")
-          .update({ status: "declined" })
-          .eq("id", trade.id);
+        await supabase.from("trades").update({ status: "declined" }).eq("id", trade.id);
       } catch (e) {
-        console.warn("[SwapMeet76] Supabase decline failed (demo only).", e);
+        console.warn("Supabase failed, demo only.");
       }
 
       alert("Trade declined.");
@@ -378,14 +329,11 @@ async function loadTradeInbox() {
 }
 
 // ---------------------------------------------------------
-// PAGE: PROFILE (profile.html)
+// PAGE: PROFILE
 // ---------------------------------------------------------
 function loadProfile() {
-  const profileRoot = document.getElementById("profileRoot");
-  if (!profileRoot) {
-    console.log("[SwapMeet76] Profile: no root element, skipping.");
-    return;
-  }
+  const root = document.getElementById("profileRoot");
+  if (!root) return;
 
   console.log("[SwapMeet76] Profile loaded.");
 }
