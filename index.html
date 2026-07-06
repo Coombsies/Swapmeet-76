@@ -34,9 +34,11 @@
         <a href="pages/home.html" class="sm76-btn sm76-btn-primary">
           Enter the SwapMeet
         </a>
-        <a href="pages/mytable.html" class="sm76-btn sm76-btn-outline">
+
+        <!-- FIXED BUTTON -->
+        <button id="setupTableBtn" class="sm76-btn sm76-btn-outline">
           Set Up My Table
-        </a>
+        </button>
       </div>
 
       <div class="sm76-hero-tags">
@@ -76,6 +78,19 @@
   </div>
 </div>
 
+<script type="module">
+  import { createSwapTable } from "./app.js";
+
+  document.getElementById("setupTableBtn").onclick = async () => {
+    const name = prompt("Name your table:");
+    if (!name) return;
+
+    const table = await createSwapTable(name);
+    console.log("Created table:", table);
+
+    alert(`Your table "${table.name}" is live.`);
+  };
+</script>
+
 </body>
 </html>
-
