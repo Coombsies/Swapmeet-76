@@ -579,3 +579,29 @@ async function loadProfile() {
     };
   }
 }
+
+// ---------------------------------------------------------
+// CREATE TABLE (called from index.html)
+// ---------------------------------------------------------
+export async function createSwapTable(name) {
+  const user = await requireAuth(true);
+  if (!user) return null;
+
+  try {
+    const { data, error } = await supabase
+      .from("swap_tables")
+      .insert([{ name, owner_id: user.id }])
+      .select()
+      .single();
+
+    if (error) {
+      console.warn("[SwapMeet76] createSwapTable failed", error);
+      return null;
+    }
+
+    return data;
+  } catch (e) {
+    console.warn("[SwapMeet76] createSwapTable exception", e);
+    return null;
+  }
+}
