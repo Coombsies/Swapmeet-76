@@ -1,12 +1,10 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js";
 
-// ---------------------------------------------------------
-// SUPABASE CLIENT (REAL)
-// ---------------------------------------------------------
 export const supabase = createClient(
-  "https://hustalahrlhzmxvvpwbc.supabase.co", // <-- your real ref
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh1c3RhbGFocmxoem14dnZwd2JjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMzMjIxNjQsImV4cCI6MjA5ODg5ODE2NH0.sagiwkUiw2MKdCsJM7tOncTxRjjQZ_n2K004PgOC3Ns"
+  "https://fwyzjnyfntidczfmligy.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ3eXpqbnlmbnRpZGN6Zm1saWd5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUzNjE2OTcsImV4cCI6MjEwMDkzNzY5N30.5B_siwtlv4b4vAHogfJHNLS2x0c7n2BubdzR5nL96_c"
 );
+
 
 // ---------------------------------------------------------
 // HYBRID MODE FALLBACK DATA (used if Supabase empty)
